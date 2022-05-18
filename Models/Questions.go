@@ -14,7 +14,7 @@ func GetQuestions(data Utils.GetQuestionForm) ([]Utils.QuestionList, error) {
         Select QuestionId From QuestionsFinish Where isCorrect = 1 And UserId = ?
     )
 ) B `
-	rows, err := Utils.MDB().Query(template, data.Category, data.UserId)
+	rows, err := Utils.MDB().Query(template, data.SectionId, data.UserId)
 	if err != nil {
 		log.Println(err)
 		return nil, err

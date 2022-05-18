@@ -15,7 +15,7 @@ func GetQuestions(c *gin.Context) {
 	sCategory := c.Query("category")
 	sNum := c.Query("num")
 	sType := c.Query("type")
-	form.Category, err1 = strconv.ParseInt(sCategory, 10, 64)
+	form.SectionId, err1 = strconv.ParseInt(sCategory, 10, 64)
 	form.Num, err2 = strconv.ParseInt(sNum, 10, 64)
 	form.RequestType, err3 = strconv.ParseInt(sType, 10, 64)
 	if err1 != nil || err2 != nil || err3 != nil {
