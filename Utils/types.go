@@ -3,7 +3,7 @@ package Utils
 type GetQuestionForm struct {
 	UserId      int64 `json:"-"`
 	Num         int64 `json:"num"`
-	Category    int64 `json:"category"`
+	SectionId   int64 `json:"sectionId"`
 	RequestType int64 `json:"type"`
 }
 
@@ -28,4 +28,6 @@ type Subject struct {
 type Section struct {
 	SectionId   int64  `json:"chapterId"`
 	SectionName string `json:"chapterName"`
+	FinishedNum int64  `json:"finishedNum"`
+	TotalNum    int64  `json:"totalNum"`
 }

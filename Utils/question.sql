@@ -6,7 +6,7 @@ Create Table QuestionList
 (
     QuestionId   int auto_increment primary key,
     QuestionType smallint not null default 0,
-    CategoryId   int      not null default 0
+    SectionId   int      not null default 0
 ) charset = utf8mb4;
 Create Index CategoryId On QuestionList (CategoryId);
 

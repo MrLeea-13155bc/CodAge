@@ -36,5 +36,13 @@ func GetAllChapter(cid int64) ([]Utils.Section, error) {
 		rows.Scan(&section.SectionId, &section.SectionName)
 		sections = append(sections, section)
 	}
+	template = `Select * From (Select Count(QuestionId) as Total From QuestionList Where SectionId = ?) A 
+    Join (Select Count(QuestionId) as Num From QuestionList C Where QuestionId  Not in
+       (Select QuestionId From QuestionsFinish Where UserId = ?) And SectionId = ?) B`
+	for id, item := range sections {
+		rows, _ = Utils.MDB().Query(template, item.SectionId, 1, item.SectionId)
+		rows.Next()
+		rows.Scan(&sections[id].TotalNum, &sections[id].TotalNum)
+	}
 	return sections, nil
 }
