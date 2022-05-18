@@ -1,0 +1,36 @@
+package Utils
+
+type GetQuestionForm struct {
+	UserId      int64 `json:"-"`
+	Num         int64 `json:"num"`
+	Category    int64 `json:"category"`
+	RequestType int64 `json:"type"`
+}
+
+type QuestionList struct {
+	QuestionId       int       `json:"questionId"`
+	QuestionTitle    string    `json:"questionTitle"`
+	QuestionType     int       `json:"questionType"`
+	QuestionImageURl string    `json:"questionImage,omitempty"`
+	QuestionOptions  []Options `json:"questionOptions"`
+}
+
+type Options struct {
+	OptionId int    `json:"optionId"`
+	Context  string `json:"context"`
+}
+
+type Subject struct {
+	SubjectId   int64  `json:"subjectId"`
+	SubjectName string `json:"subjectName"`
+}
+
+type Section struct {
+	SectionId   int64  `json:"sectionId"`
+	SectionName string `json:"sectionName"`
+}
+
+type Lesson struct {
+	LessonId   int64  `json:"lessonId"`
+	LessonName string `json:"lessonName"`
+}
