@@ -15,6 +15,7 @@ func GetAllSubject(userId int64) ([]Utils.Subject, error) {
 		log.Println(err)
 		return nil, err
 	}
+	defer rows.Close()
 	var item Utils.Subject
 	for rows.Next() {
 		rows.Scan(&item.SubjectId, &item.SubjectName)
@@ -30,6 +31,7 @@ func GetAllChapter(cid int64) ([]Utils.Section, error) {
 		log.Println("err,", err)
 		return nil, err
 	}
+	defer rows.Close()
 	sections := make([]Utils.Section, 0)
 	section := Utils.Section{}
 	for rows.Next() {
@@ -41,6 +43,7 @@ func GetAllChapter(cid int64) ([]Utils.Section, error) {
        (Select QuestionId From QuestionsFinish Where UserId = ?) And SectionId = ?) B`
 	for id, item := range sections {
 		rows, _ = Utils.MDB().Query(template, item.SectionId, 1, item.SectionId)
+		defer rows.Close()
 		rows.Next()
 		rows.Scan(&sections[id].TotalNum, &sections[id].FinishedNum)
 	}
