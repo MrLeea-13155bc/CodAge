@@ -26,6 +26,6 @@ type Subject struct {
 }
 
 type Section struct {
-	SectionId   int64  `json:"sectionId"`
-	SectionName string `json:"sectionName"`
+	SectionId   int64  `json:"chapterId"`
+	SectionName string `json:"chapterName"`
 }
