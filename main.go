@@ -3,6 +3,7 @@ package main
 import (
 	"QuestionSearch/MiddleWares"
 	"QuestionSearch/Routers"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/go-ini/ini"
 	"log"
@@ -26,6 +27,7 @@ func init() {
 
 func main() {
 	router := gin.Default()
+	router.Use(cors.Default())
 	api := router.Group("/api")
 	{
 		question := api.Group("/question")
