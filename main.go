@@ -37,6 +37,7 @@ func main() {
 		subject := api.Group("/subject", MiddleWares.Auth())
 		{
 			subject.GET("/getAllSubject", Routers.GetAllSubject)
+			subject.GET("/getAllChaptersById", Routers.GetAllChaptersById)
 		}
 	}
 	router.Run(port)

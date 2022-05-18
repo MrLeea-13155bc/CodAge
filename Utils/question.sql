@@ -73,15 +73,6 @@ Create Table Section
 Create FULLTEXT INDEX SearchSection On Section (SectionName);
 Create Index SearchBySubject On Section (SubjectId);
 
-Create Table Lesson
-(
-    LessonId   int auto_increment primary key,
-    SectionId  int         default -1,
-    LessonName varchar(40) default '空'
-) charset = utf8mb4, engine = MyISAM;
-Create FULLTEXT INDEX SearchLesson On Lesson (LessonName);
-Create Index SearchBySection On Lesson (SectionId);
-
 Create Table UserLesson
 (
     UserId    int,

@@ -29,8 +29,3 @@ type Section struct {
 	SectionId   int64  `json:"sectionId"`
 	SectionName string `json:"sectionName"`
 }
-
-type Lesson struct {
-	LessonId   int64  `json:"lessonId"`
-	LessonName string `json:"lessonName"`
-}

@@ -22,3 +22,19 @@ func GetAllSubject(userId int64) ([]Utils.Subject, error) {
 	}
 	return result, nil
 }
+
+func GetAllChapter(cid int64) ([]Utils.Section, error) {
+	template := `Select SectionId,SectionName From Section Where SectionId = ?`
+	rows, err := Utils.MDB().Query(template, cid)
+	if err != nil {
+		log.Println("err,", err)
+		return nil, err
+	}
+	sections := make([]Utils.Section, 0)
+	section := Utils.Section{}
+	for rows.Next() {
+		rows.Scan(&section.SectionId, &section.SectionName)
+		sections = append(sections, section)
+	}
+	return sections, nil
+}

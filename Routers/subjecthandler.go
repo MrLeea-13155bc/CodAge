@@ -4,6 +4,7 @@ import (
 	"QuestionSearch/Models"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 func GetAllSubject(c *gin.Context) {
@@ -15,4 +16,19 @@ func GetAllSubject(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, data)
 	}
+}
+
+func GetAllChaptersById(c *gin.Context) {
+	cid := c.Query("id")
+	id, err := strconv.ParseInt(cid, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	data, err := Models.GetAllChapter(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, nil)
+		return
+	}
+	c.JSON(http.StatusOK, data)
 }
