@@ -24,7 +24,7 @@ func GetAllSubject(userId int64) ([]Utils.Subject, error) {
 }
 
 func GetAllChapter(cid int64) ([]Utils.Section, error) {
-	template := `Select SectionId,SectionName From Section Where SectionId = ?`
+	template := `Select SectionId,SectionName From Section Where SubjectId = ?`
 	rows, err := Utils.MDB().Query(template, cid)
 	if err != nil {
 		log.Println("err,", err)
