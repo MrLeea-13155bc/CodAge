@@ -12,13 +12,14 @@ import (
 func GetQuestions(c *gin.Context) {
 	form := Utils.GetQuestionForm{}
 	var err1, err2, err3 error
-	sCategory := c.Query("category")
+	sCategory := c.Query("chapter")
 	sNum := c.Query("num")
 	sType := c.Query("type")
 	form.SectionId, err1 = strconv.ParseInt(sCategory, 10, 64)
 	form.Num, err2 = strconv.ParseInt(sNum, 10, 64)
 	form.RequestType, err3 = strconv.ParseInt(sType, 10, 64)
 	if err1 != nil || err2 != nil || err3 != nil {
+		log.Println(err1, err2, err3)
 		c.JSON(http.StatusBadRequest, gin.H{"message": "请求错误"})
 		return
 	}

@@ -30,9 +30,17 @@ func main() {
 	router.Use(cors.Default())
 	api := router.Group("/api")
 	{
-		question := api.Group("/question")
+		user := api.Group("/user")
 		{
-			question.GET("/", Routers.GetQuestions)
+			user.POST("/register", Routers.CreateUser)
+			user.POST("/login", Routers.Login)
+			user.PUT("/Info", MiddleWares.Auth(), Routers.UpdateUserInfo)
+			user.GET("/Info", MiddleWares.Auth(), Routers.GetUserInfo)
+			user.GET("/my", MiddleWares.Auth(), Routers.GetShowInfo)
+		}
+		question := api.Group("/question", MiddleWares.Auth())
+		{
+			question.GET("/get", Routers.GetQuestions)
 		}
 		subject := api.Group("/subject", MiddleWares.Auth())
 		{

@@ -24,7 +24,7 @@ func GetAllSubject(userId int64) ([]Utils.Subject, error) {
 	return result, nil
 }
 
-func GetAllChapter(cid int64) ([]Utils.Section, error) {
+func GetAllChapter(cid, uid int64) ([]Utils.Section, error) {
 	template := `Select SectionId,SectionName From Section Where SubjectId = ?`
 	rows, err := Utils.MDB().Query(template, cid)
 	if err != nil {
@@ -42,7 +42,7 @@ func GetAllChapter(cid int64) ([]Utils.Section, error) {
     Join (Select Count(QuestionId) as Num From QuestionList C Where QuestionId  In
        (Select QuestionId From QuestionsFinish Where UserId = ?) And SectionId = ?) B`
 	for id, item := range sections {
-		rows, _ = Utils.MDB().Query(template, item.SectionId, 1, item.SectionId)
+		rows, _ = Utils.MDB().Query(template, item.SectionId, uid, item.SectionId)
 		defer rows.Close()
 		rows.Next()
 		rows.Scan(&sections[id].TotalNum, &sections[id].FinishedNum)

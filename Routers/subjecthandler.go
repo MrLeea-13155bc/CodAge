@@ -19,13 +19,15 @@ func GetAllSubject(c *gin.Context) {
 }
 
 func GetAllChaptersById(c *gin.Context) {
-	cid := c.Query("id")
-	id, err := strconv.ParseInt(cid, 10, 64)
+	sSectionId := c.Query("id")
+	iUserId, _ := c.Get("userId")
+	userId := iUserId.(int64)
+	sectionId, err := strconv.ParseInt(sSectionId, 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
-	data, err := Models.GetAllChapter(id)
+	data, err := Models.GetAllChapter(sectionId, userId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, nil)
 		return

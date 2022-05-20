@@ -8,8 +8,8 @@ import (
 func GetQuestions(data Utils.GetQuestionForm) ([]Utils.QuestionList, error) {
 	var questions = make([]Utils.QuestionList, 0)
 	var question = Utils.QuestionList{}
-	template := `Select QuestionId,Title,TitleHasImage,QuestionType From QuestionInfo A Natural Join (
-    Select QuestionId,QuestionType From QuestionList Where CategoryId = ?
+	template := `Select QuestionId,Title,ImageUrl,QuestionType From QuestionInfo A Natural Join (
+    Select QuestionId,QuestionType From QuestionList Where SectionId = ?
     And QuestionId not In (
         Select QuestionId From QuestionsFinish Where isCorrect = 1 And UserId = ?
     )

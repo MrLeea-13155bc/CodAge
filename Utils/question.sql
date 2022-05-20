@@ -1,14 +1,15 @@
 Create Database GodAge;
 use GodAge;
 create user GodAger identified by 'qs123456';
-grant select, update On GodAge.* to GodAger;
+grant select,update On GodAge.* to GodAger;
+Grant insert on GodAge.* to GodAger;
 Create Table QuestionList
 (
     QuestionId   int auto_increment primary key,
     QuestionType smallint not null default 0,
     SectionId   int      not null default 0
 ) charset = utf8mb4;
-Create Index CategoryId On QuestionList (CategoryId);
+Create Index CategoryId On QuestionList (SectionId);
 
 Create Table QuestionInfo
 (
@@ -16,7 +17,7 @@ Create Table QuestionInfo
     CreateDate     int          default 0,
     LastChangeDate int          default 0,
     Title          varchar(255) default '空',
-    TitleHasImage  smallint     default 0
+    ImageUrl  smallint     default 0
 ) charset = utf8mb4;
 
 Create Table Options
@@ -36,13 +37,14 @@ Create Table User
 Create Table UserInfo
 (
     UserId     int primary key,
-    RealName   varchar(10) default '狗东西没名字',
-    NickName   varchar(10) default '舔狗',
-    AttendDate int         default 0,
-    Major      varchar(10) default '未选择',
-    Birthday   int         default 0,
-    Phone      int         default -1,
-    Email      varchar(30) default '空'
+    RealName   varchar(10)  default '狗东西没名字',
+    NickName   varchar(10)  default '舔狗',
+    AttendDate int          default 0,
+    Major      varchar(10)  default '未选择',
+    Birthday   int          default 0,
+    Phone      int          default -1,
+    Email      varchar(30)  default '空',
+    Icon       varchar(255) default 'nil'
 ) charset = utf8mb4;
 
 Create Table QuestionsFinish
@@ -79,3 +81,5 @@ Create Table UserLesson
     SubjectId int,
     primary key (UserId, SubjectId)
 );
+
+show status like 'Threads%'

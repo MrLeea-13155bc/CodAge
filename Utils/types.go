@@ -3,7 +3,7 @@ package Utils
 type GetQuestionForm struct {
 	UserId      int64 `json:"-"`
 	Num         int64 `json:"num"`
-	SectionId   int64 `json:"sectionId"`
+	SectionId   int64 `json:"chapterId"`
 	RequestType int64 `json:"type"`
 }
 
@@ -30,4 +30,29 @@ type Section struct {
 	SectionName string `json:"chapterName"`
 	FinishedNum int64  `json:"finishedNum"`
 	TotalNum    int64  `json:"totalNum"`
+}
+
+type RegisterForm struct {
+	StudentNum string `json:"studentNum"`
+	Password   string `json:"password"`
+}
+
+type UserInfo struct {
+	UserId     int64  `json:"-"`
+	RealName   string `json:"realName"`
+	NickName   string `json:"nickName"`
+	AttendDate int    `json:"attendDate"`
+	Major      string `json:"major"`
+	Birthday   int    `json:"birthday"`
+	Phone      string `json:"phone"`
+	Email      string `json:"email"`
+}
+
+type UserShowInfo struct {
+	UserName   string `json:"userName"`
+	UserNum    int    `json:"userNum"`
+	Icon       string `json:"icon"`
+	Subjects   []Subject
+	TotalNum   int `json:"totalNum"`
+	CorrectNum int `json:"correctNum"`
 }
