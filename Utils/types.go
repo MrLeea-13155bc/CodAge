@@ -40,12 +40,8 @@ type RegisterForm struct {
 type UserInfo struct {
 	UserId     int64  `json:"-"`
 	RealName   string `json:"realName"`
-	NickName   string `json:"nickName"`
 	AttendDate int    `json:"attendDate"`
 	Major      string `json:"major"`
-	Birthday   int    `json:"birthday"`
-	Phone      string `json:"phone"`
-	Email      string `json:"email"`
 }
 
 type UserShowInfo struct {

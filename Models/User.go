@@ -50,8 +50,8 @@ func Login(info Utils.RegisterForm) int64 {
 }
 
 func UpdateUserInfo(info Utils.UserInfo) bool {
-	template := `Update UserInfo Set RealName = ?,NickName=?,Major=?,Birthday=?,Phone=?,Email=? Where UserId = ? limit 1`
-	result, err := Utils.MDB().Exec(template, info.RealName, info.NickName, info.Major, info.Birthday, info.Phone, info.Email, info.UserId)
+	template := `Update UserInfo Set RealName = ?,Major=? Where UserId = ? limit 1`
+	result, err := Utils.MDB().Exec(template, info.RealName, info.Major, info.UserId)
 	if err != nil {
 		log.Println("[UpdateUserInfo]", err)
 		return false
@@ -62,7 +62,7 @@ func UpdateUserInfo(info Utils.UserInfo) bool {
 
 func GetUserInfo(uid int64) (result Utils.UserInfo, err error) {
 	var rows *sql.Rows
-	template := `Select UserId,RealName, NickName, AttendDate, Major, Birthday, Phone, Email From UserInfo Where UserId = ?`
+	template := `Select UserId,RealName, AttendDate, Major From UserInfo Where UserId = ?`
 	rows, err = Utils.MDB().Query(template, uid)
 	if err != nil {
 		return
@@ -72,7 +72,7 @@ func GetUserInfo(uid int64) (result Utils.UserInfo, err error) {
 		err = errors.New("not Fount")
 		return
 	}
-	err = rows.Scan(&result.UserId, &result.RealName, &result.NickName, &result.AttendDate, &result.Major, &result.Birthday, &result.Phone, &result.Email)
+	err = rows.Scan(&result.UserId, &result.RealName, &result.AttendDate, &result.Major)
 	return
 }
 

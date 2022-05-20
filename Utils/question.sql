@@ -38,12 +38,8 @@ Create Table UserInfo
 (
     UserId     int primary key,
     RealName   varchar(10)  default '狗东西没名字',
-    NickName   varchar(10)  default '舔狗',
     AttendDate int          default 0,
     Major      varchar(10)  default '未选择',
-    Birthday   int          default 0,
-    Phone      int          default -1,
-    Email      varchar(30)  default '空',
     Icon       varchar(255) default 'nil'
 ) charset = utf8mb4;
 

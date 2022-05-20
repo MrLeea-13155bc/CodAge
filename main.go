@@ -27,7 +27,10 @@ func init() {
 
 func main() {
 	router := gin.Default()
-	router.Use(cors.Default())
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:8080", "http://localhost:8081"}
+	config.AllowCredentials = true
+	router.Use(cors.New(config))
 	api := router.Group("/api")
 	{
 		user := api.Group("/user")
@@ -48,5 +51,5 @@ func main() {
 			subject.GET("/getAllChaptersById", Routers.GetAllChaptersById)
 		}
 	}
-	router.Run(port)
+	router.RunTLS(":8081", "key/wonend.pem", "key/wonend.key")
 }
