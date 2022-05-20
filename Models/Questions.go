@@ -16,7 +16,6 @@ func GetQuestions(data Utils.GetQuestionForm) ([]Utils.QuestionList, error) {
         Select QuestionId From QuestionsFinish Where isCorrect = 1 And UserId = ?
     )
 ) B Order By Rand() Limit ?`
-	log.Println(data)
 	rows, err := Utils.MDB().Query(template, data.SectionId, data.UserId, data.Num)
 	if err != nil {
 		log.Println(err)
@@ -62,11 +61,9 @@ func CheckAnswers(answer []Utils.Answer, uid int64) ([]Utils.Answer, int, int, e
 		if tmp {
 			correct++
 		}
-		result, err := affair.Exec(template, uid, item.QuestionId, time.Now().Unix(), tmp)
-		log.Println(result, err)
+		affair.Exec(template, uid, item.QuestionId, time.Now().Unix(), tmp)
 		answer[id].Answers = correctAnswer
 	}
-	err := affair.Commit()
-	log.Println(err)
+	affair.Commit()
 	return answer, correct, len(answer), nil
 }

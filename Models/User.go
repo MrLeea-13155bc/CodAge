@@ -79,7 +79,7 @@ func GetUserInfo(uid int64) (result Utils.UserInfo, err error) {
 func GetShowInfo(uid int64) (info Utils.UserShowInfo, err error) {
 	template := `
 Select * From 
-(Select  NickName,Icon  From UserInfo Where UserId = ? ) A  Join 
+(Select  RealName,Icon  From UserInfo Where UserId = ? ) A  Join 
 (Select StudentNum From User Where UserId = ?) B Join
 (Select COALESCE(Count(QuestionId),0),COALESCE(Sum(isCorrect),0) From (
     Select QuestionId,isCorrect From QuestionsFinish Where UserId = ?
