@@ -2,7 +2,7 @@ Create Database GodAge;
 use GodAge;
 create user GodAger identified by 'qs123456';
 grant select,update On GodAge.* to GodAger;
-Grant insert on GodAge.* to GodAger;
+Grant delete on GodAge.* to GodAger;
 Create Table QuestionList
 (
     QuestionId   int auto_increment primary key,
@@ -17,6 +17,7 @@ Create Table QuestionInfo
     CreateDate     int          default 0,
     LastChangeDate int          default 0,
     Title          varchar(255) default '空',
+    CorrectAnswer  varchar(30) default '',
     ImageUrl  smallint     default 0
 ) charset = utf8mb4;
 

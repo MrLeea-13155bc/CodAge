@@ -12,7 +12,8 @@ type QuestionList struct {
 	QuestionTitle    string    `json:"questionTitle"`
 	QuestionType     int       `json:"questionType"`
 	QuestionImageURl string    `json:"questionImage,omitempty"`
-	QuestionOptions  []Options `json:"questionOptions"`
+	QuestionOptions  []Options `json:"questionOptions,omitempty"`
+	CorrectAnswer    string    `json:"-"`
 }
 
 type Options struct {
@@ -51,4 +52,9 @@ type UserShowInfo struct {
 	Subjects   []Subject
 	TotalNum   int `json:"totalNum"`
 	CorrectNum int `json:"correctNum"`
+}
+
+type Answer struct {
+	QuestionId int64  `json:"id"`
+	Answers    string `json:"answer"`
 }

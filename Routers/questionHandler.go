@@ -15,6 +15,8 @@ func GetQuestions(c *gin.Context) {
 	sCategory := c.Query("chapter")
 	sNum := c.Query("num")
 	sType := c.Query("type")
+	iUserId, _ := c.Get("userId")
+	form.UserId = iUserId.(int64)
 	form.SectionId, err1 = strconv.ParseInt(sCategory, 10, 64)
 	form.Num, err2 = strconv.ParseInt(sNum, 10, 64)
 	form.RequestType, err3 = strconv.ParseInt(sType, 10, 64)
@@ -30,4 +32,22 @@ func GetQuestions(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, data)
+}
+
+func CheckAnswer(c *gin.Context) {
+	iUserId, _ := c.Get("userId")
+	userId := iUserId.(int64)
+	var form []Utils.Answer
+	c.Bind(&form)
+	data, correct, total, err := Models.CheckAnswers(form, userId)
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	c.JSON(http.StatusCreated, gin.H{
+		"data":    data,
+		"correct": correct,
+		"total":   total,
+	})
 }

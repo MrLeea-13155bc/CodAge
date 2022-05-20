@@ -44,6 +44,7 @@ func main() {
 		question := api.Group("/question", MiddleWares.Auth())
 		{
 			question.GET("/get", Routers.GetQuestions)
+			question.POST("/commit", Routers.CheckAnswer)
 		}
 		subject := api.Group("/subject", MiddleWares.Auth())
 		{
