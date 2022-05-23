@@ -34,7 +34,7 @@ func Login(c *gin.Context) {
 		Domain:   "",
 		HttpOnly: false,
 		SameSite: 4,
-		Secure:   false,
+		Secure:   true,
 	})
 	c.JSON(http.StatusCreated, nil)
 }
