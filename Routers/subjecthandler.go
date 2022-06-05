@@ -2,6 +2,7 @@ package Routers
 
 import (
 	"QuestionSearch/Models"
+	"QuestionSearch/Utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -33,4 +34,49 @@ func GetAllChaptersById(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, data)
+}
+
+func SearchSubject(c *gin.Context) {
+	subject := c.Query("name")
+	if len([]rune(subject)) < 2 {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	userId, _ := c.Get("userId")
+	result, err := Models.SearchSubject(subject, userId.(int64))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, nil)
+		return
+	}
+	c.JSON(http.StatusOK, result)
+}
+
+func AddSubject(c *gin.Context) {
+	userId, _ := c.Get("userId")
+	var info Utils.Subject
+	c.Bind(&info)
+	if !Models.AddSubject(info.SubjectId, userId.(int64)) {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	c.JSON(http.StatusCreated, nil)
+}
+
+func InsertSubject(c *gin.Context) {
+	var info Utils.Subject
+	c.Bind(&info)
+	if info.SubjectName == "" || !Models.InsertSubject(info) {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	c.JSON(http.StatusCreated, nil)
+}
+func InsertSection(c *gin.Context) {
+	var info Utils.SectionInfo
+	c.Bind(&info)
+	if info.SectionName == "" || !Models.InsertSection(info) {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	c.JSON(http.StatusCreated, nil)
 }

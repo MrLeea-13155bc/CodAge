@@ -45,11 +45,16 @@ func main() {
 		{
 			question.GET("/get", Routers.GetQuestions)
 			question.POST("/commit", Routers.CheckAnswer)
+			question.POST("/add", Routers.AddQuestion)
 		}
 		subject := api.Group("/subject", MiddleWares.Auth())
 		{
 			subject.GET("/getAllSubject", Routers.GetAllSubject)
 			subject.GET("/getAllChaptersById", Routers.GetAllChaptersById)
+			subject.GET("/search", Routers.SearchSubject)
+			subject.POST("/choose", Routers.AddSubject)
+			subject.POST("/insertSubject", Routers.InsertSubject)
+			subject.POST("/insertSection", Routers.InsertSection)
 		}
 	}
 	router.RunTLS(port, "key/wonend.pem", "key/wonend.key")

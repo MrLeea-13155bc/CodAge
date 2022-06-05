@@ -51,3 +51,13 @@ func CheckAnswer(c *gin.Context) {
 		"total":   total,
 	})
 }
+
+func AddQuestion(c *gin.Context) {
+	var info Utils.InsertForm
+	c.Bind(&info)
+	if !Models.AddQuestion(info) {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	c.JSON(http.StatusCreated, nil)
+}

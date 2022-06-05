@@ -59,16 +59,16 @@ Create Table Subject
     SubjectId   int auto_increment primary key,
     SubjectName varchar(30) default '空'
 ) charset = utf8mb4,
-  engine = MyISAM;
-Create FULLTEXT INDEX SearchSubject On Subject (SubjectName);
-
+  engine = Innodb;
+Create FULLTEXT INDEX SearchSubject On Subject (SubjectName) with parser ngram;
+Select * From Subject Where Match(SubjectName) Against('+信息' In Boolean Mode);
 Create Table Section
 (
     SectionId   int auto_increment primary key,
     SubjectId   int         default -1,
     SectionName varchar(40) default '空'
-) charset = utf8mb4, engine = MyISAM;
-Create FULLTEXT INDEX SearchSection On Section (SectionName);
+) charset = utf8mb4, engine = Innodb;
+Create FULLTEXT INDEX SearchSection On Section (SectionName) with parser ngram;
 Create Index SearchBySubject On Section (SubjectId);
 
 Create Table UserLesson

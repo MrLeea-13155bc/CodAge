@@ -13,7 +13,7 @@ type QuestionList struct {
 	QuestionType     int       `json:"questionType"`
 	QuestionImageURl string    `json:"questionImage,omitempty"`
 	QuestionOptions  []Options `json:"questionOptions,omitempty"`
-	CorrectAnswer    string    `json:"-"`
+	CorrectAnswer    string    `json:"questionAnswer,omitempty"`
 }
 
 type Options struct {
@@ -25,12 +25,16 @@ type Subject struct {
 	SubjectId   int64  `json:"subjectId"`
 	SubjectName string `json:"subjectName"`
 }
-
-type Section struct {
+type SectionInfo struct {
 	SectionId   int64  `json:"chapterId"`
 	SectionName string `json:"chapterName"`
-	FinishedNum int64  `json:"finishedNum"`
-	TotalNum    int64  `json:"totalNum"`
+	SubjectId   int64  `json:"subjectId"`
+}
+
+type Section struct {
+	SectionInfo
+	FinishedNum int64 `json:"finishedNum"`
+	TotalNum    int64 `json:"totalNum"`
 }
 
 type RegisterForm struct {
@@ -57,4 +61,9 @@ type UserShowInfo struct {
 type Answer struct {
 	QuestionId int64  `json:"id"`
 	Answers    string `json:"answer"`
+}
+
+type InsertForm struct {
+	SectionId int64 `json:"sectionId"`
+	QuestionList
 }

@@ -40,9 +40,10 @@ func GetQuestions(data Utils.GetQuestionForm) ([]Utils.QuestionList, error) {
 			options = append(options, option)
 		}
 		questions[id].QuestionOptions = options
-		go func(item Utils.QuestionList) {
+		go func(questionId int, correctAnswer string) {
 			Utils.RDB().Set(strconv.Itoa(item.QuestionId), item.CorrectAnswer, time.Hour)
-		}(item)
+		}(item.QuestionId, item.CorrectAnswer)
+		questions[id].CorrectAnswer = ""
 	}
 	return questions, nil
 }
@@ -66,4 +67,37 @@ func CheckAnswers(answer []Utils.Answer, uid int64) ([]Utils.Answer, int, int, e
 	}
 	affair.Commit()
 	return answer, correct, len(answer), nil
+}
+
+func AddQuestion(list Utils.InsertForm) bool {
+	affair, _ := Utils.MDB().Begin()
+	template := `Insert Into QuestionList Set QuestionType=?,SectionId = ?`
+	result, err := affair.Exec(template, list.QuestionType, list.SectionId)
+	if err != nil {
+		affair.Rollback()
+		return false
+	}
+	id, _ := result.LastInsertId()
+	if list.QuestionType < 2 {
+		for key, item := range list.QuestionOptions {
+			template = `Insert Into Options Set QuestionId=?,OptionTitle=?`
+			thisResult, _ := affair.Exec(template, id, item.Context)
+			lastId, err := thisResult.LastInsertId()
+			if err != nil {
+				affair.Rollback()
+				return false
+			}
+			if key == 0 {
+				list.CorrectAnswer = Utils.AddOptionsId(list.CorrectAnswer, lastId)
+			}
+		}
+	}
+	template = `Insert Into QuestionInfo Set QuestionId = ?,CreateDate=?,LastChangeDate=?,Title=?,CorrectAnswer=?,ImageUrl=?`
+	_, err = affair.Exec(template, id, time.Now().Unix(), time.Now().Unix(), list.QuestionTitle, list.CorrectAnswer, list.QuestionImageURl)
+	if err != nil {
+		affair.Rollback()
+		return false
+	}
+	affair.Commit()
+	return true
 }
